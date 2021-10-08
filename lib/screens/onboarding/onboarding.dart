@@ -1,7 +1,8 @@
+import 'package:finaro_project/screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:finaro_project/screens/onboarding/content_model.dart';
 import 'package:finaro_project/screens/home.dart';
+import 'package:finaro_project/screens/onboarding/slider.dart';
 
 class Onboarding extends StatefulWidget {
   @override
@@ -9,116 +10,115 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> {
-  int currentIndex = 0;
-  PageController _controller;
+  int _currentPage = 0;
+  PageController _controller = PageController();
 
-  @override
-  void initState() {
-    _controller = PageController(initialPage: 0);
-    super.initState();
-  }
+  List<Widget> _pages = [
+    SliderPage(
+        title: "FinCari",
+        description: "Panggil Pedagang terdekat hanya dalam gengganganmu",
+        image: "assets/fincari.svg"),
+    SliderPage(
+        title: "FinTime",
+        description:
+            "Tak perlu pusing lagi dengan internet perjalananmu aman tercatat",
+        image: "assets/fintime.svg"),
+    SliderPage(
+        title: "FinTips",
+        description:
+            "Berbagi tips dan aspirasi dari konsumer tingkatkan bisnis",
+        image: "assets/fintips.svg"),
+    SliderPage(
+        title: "FinSubs",
+        description: "Berlangganan dengan pedagang favorite kamu",
+        image: "assets/finsubs.svg"),
+    SliderPage(
+        title: "FinBinsis",
+        description: "Kelola bisnis keliling kamu hanya dalam genggaman",
+        image: "assets/finbisnis.svg"),
+  ];
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+  _onchanged(int index) {
+    setState(() {
+      _currentPage = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: PageView.builder(
-              controller: _controller,
-              itemCount: contents.length,
-              onPageChanged: (int index) {
-                setState(() {
-                  currentIndex = index;
-                });
-              },
-              itemBuilder: (_, i) {
-                return Padding(
-                  padding: const EdgeInsets.all(40),
-                  child: Column(
-                    children: [
-                      SvgPicture.asset(
-                        contents[i].image,
-                        height: 300,
-                      ),
-                      Text(
-                        contents[i].title,
-                        style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        contents[i].discription,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                        ),
-                      )
-                    ],
+      body: Stack(
+        children: <Widget>[
+          PageView.builder(
+            scrollDirection: Axis.horizontal,
+            onPageChanged: _onchanged,
+            controller: _controller,
+            itemCount: _pages.length,
+            itemBuilder: (context, int index) {
+              return _pages[index];
+            },
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List<Widget>.generate(_pages.length, (int index) {
+                    return AnimatedContainer(
+                        duration: Duration(milliseconds: 300),
+                        height: 10,
+                        width: (index == _currentPage) ? 30 : 10,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 30),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: (index == _currentPage)
+                                ? Colors.blue
+                                : Colors.blue.withOpacity(0.5)));
+                  })),
+              InkWell(
+                onTap: () {
+                  _controller.nextPage(
+                      duration: Duration(milliseconds: 800),
+                      curve: Curves.easeInOutQuint);
+                },
+                child: AnimatedContainer(
+                  alignment: Alignment.center,
+                  duration: Duration(milliseconds: 300),
+                  height: 70,
+                  width: (_currentPage == (_pages.length - 1)) ? 200 : 75,
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(35)),
+                  child: MaterialButton(
+                    child: (_currentPage == (_pages.length - 1))
+                        ? Text(
+                            "Get Started",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          )
+                        : Icon(
+                            Icons.navigate_next,
+                            size: 50,
+                            color: Colors.white,
+                          ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                contents.length,
-                (index) => buildDot(index, context),
+                ),
               ),
-            ),
+              SizedBox(
+                height: 50,
+              )
+            ],
           ),
-          Container(
-            height: 60,
-            margin: EdgeInsets.all(40),
-            width: double.infinity,
-            child: FlatButton(
-              child: Text(
-                  currentIndex == contents.length - 1 ? "Continue" : "Next"),
-              onPressed: () {
-                if (currentIndex == contents.length - 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => HomePage(),
-                    ),
-                  );
-                }
-                _controller.nextPage(
-                  duration: Duration(milliseconds: 100),
-                  curve: Curves.bounceIn,
-                );
-              },
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-          )
         ],
-      ),
-    );
-  }
-
-  Container buildDot(int index, BuildContext context) {
-    return Container(
-      height: 10,
-      width: currentIndex == index ? 25 : 10,
-      margin: EdgeInsets.only(right: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Theme.of(context).primaryColor,
       ),
     );
   }
