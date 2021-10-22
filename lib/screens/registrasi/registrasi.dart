@@ -1,5 +1,4 @@
 import 'package:finaro_project/screens/login/login.dart';
-import 'package:finaro_project/screens/registrasi/registrasisuccess.dart';
 import 'package:flutter/material.dart';
 import 'package:finaro_project/animation/fadedanimation.dart';
 

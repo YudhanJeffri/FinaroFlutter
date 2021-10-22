@@ -1,7 +1,5 @@
 import 'package:finaro_project/screens/login/login.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:finaro_project/screens/home.dart';
 import 'package:finaro_project/screens/onboarding/slider.dart';
 
 class Onboarding extends StatefulWidget {

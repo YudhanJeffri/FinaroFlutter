@@ -1,6 +1,5 @@
 import 'package:finaro_project/screens/login/login.dart';
 import 'package:flutter/material.dart';
-import 'package:finaro_project/animation/fadedanimation.dart';
 import 'package:flutter_svg/svg.dart';
 
 class RegistrasiSuccessPage extends StatelessWidget {
