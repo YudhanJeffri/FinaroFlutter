@@ -2,7 +2,10 @@
     package="com.example.finaro_project">
    <application
         android:label="finaro_project"
+        
         android:icon="@mipmap/ic_launcher">
+                <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/map_api_key"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

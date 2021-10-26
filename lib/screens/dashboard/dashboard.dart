@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:finaro_project/screens/dashboard/CarouselWithDotsPage.dart';
+import 'package:finaro_project/screens/dashboard/terdekat/terdekat.dart';
 import 'package:flutter/material.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -11,8 +12,8 @@ class DashboardPage extends StatefulWidget {
 
 final List<String> imgList = [
   'https://raw.githubusercontent.com/YudhanJeffri/FinaroFlutter/main/assets/images/banner.png',
-  'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-  'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
+  'https://raw.githubusercontent.com/YudhanJeffri/FinaroFlutter/main/assets/images/banner_2.png',
+  'https://raw.githubusercontent.com/YudhanJeffri/FinaroFlutter/main/assets/images/banner_3.png',
 ];
 
 class _DashboardPageState extends State<DashboardPage> {
@@ -86,6 +87,110 @@ class _DashboardPageState extends State<DashboardPage> {
                 height: 25,
               ),
               CarouselWithDotsPage(imgList: imgList),
+              Row(
+                children: [
+                  new GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => TerdekatPage()),
+                      );
+                    },
+                    child: new Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 68,
+                            height: 68,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/map_icon_test4.png')),
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0x0c000000),
+                                  blurRadius: 20,
+                                  offset: Offset(3, 3),
+                                ),
+                                BoxShadow(
+                                  color: Color(0x0c000000),
+                                  blurRadius: 2,
+                                  offset: Offset(-3, -3),
+                                ),
+                              ],
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Terdekat",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 13,
+                              fontFamily: "Metropolis",
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  new GestureDetector(
+                    onTap: () {
+                      print("Container clicked2");
+                    },
+                    child: new Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 68,
+                            height: 68,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/top_rated_icon1.png'),
+                                fit: BoxFit.fill,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0x0c000000),
+                                  blurRadius: 20,
+                                  offset: Offset(3, 3),
+                                ),
+                                BoxShadow(
+                                  color: Color(0x0c000000),
+                                  blurRadius: 2,
+                                  offset: Offset(-3, -3),
+                                ),
+                              ],
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Terlaris",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 13,
+                              fontFamily: "Metropolis",
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
