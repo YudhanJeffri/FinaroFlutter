@@ -1,3 +1,5 @@
+import 'package:finaro_project/screens/login/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -19,7 +21,11 @@ class _ProfilePageState extends State<ProfilePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              IconButton(icon: Icon(Icons.settings), onPressed: () {}),
+              IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () {
+                    showAlertDialogLogout(context);
+                  }),
             ],
           ),
           Container(
@@ -187,4 +193,38 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+}
+
+showAlertDialogLogout(BuildContext context) {
+  final auth = FirebaseAuth.instance;
+  // set up the button
+  Widget okButton = TextButton(
+    child: Text("OK"),
+    onPressed: () {
+      auth.signOut();
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => LoginPage()));
+    },
+  );
+  Widget cancelButton = TextButton(
+    child: Text("Cancel"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Logout"),
+    content: Text("Beneran Ingin Logout?"),
+    actions: [cancelButton, okButton],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

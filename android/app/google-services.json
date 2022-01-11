@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "366677632936",
+    "project_id": "finaro-ad1b6",
+    "storage_bucket": "finaro-ad1b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366677632936:android:cd57d0fbd472b078839f9d",
+        "android_client_info": {
+          "package_name": "com.example.finaro_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "366677632936-v0r5bggpje4fhvmr6mne69os0vh2u6jg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.finaro_project",
+            "certificate_hash": "71622a1ea30154d708744c02332f568d90804e82"
+          }
+        },
+        {
+          "client_id": "366677632936-evt6p0ev6l9is5nhhi1bqf0nat4qjoq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiCHkrf20BQB2q9nj28AJh0Gxz1wpCTUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "366677632936-evt6p0ev6l9is5nhhi1bqf0nat4qjoq3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

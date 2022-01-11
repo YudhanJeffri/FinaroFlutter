@@ -50,7 +50,7 @@ class _TerdekatPageState extends State<TerdekatPage> {
   }
 
   static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(-7.534770, 109.120157),
+    target: LatLng(-7.421911508221184, 109.2299303338653),
     zoom: 14.4746,
   );
   Completer<GoogleMapController> _controllerGoogleMap = Completer();

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:finaro_project/screens/dashboard/CarouselWithDotsPage.dart';
 import 'package:finaro_project/screens/dashboard/terdekat/terdekat.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -15,6 +16,10 @@ final List<String> imgList = [
   'https://raw.githubusercontent.com/YudhanJeffri/FinaroFlutter/main/assets/images/banner_2.png',
   'https://raw.githubusercontent.com/YudhanJeffri/FinaroFlutter/main/assets/images/banner_3.png',
 ];
+final FirebaseAuth auth = FirebaseAuth.instance;
+
+final User user = auth.currentUser;
+final uid = user.uid;
 
 class _DashboardPageState extends State<DashboardPage> {
   @override
