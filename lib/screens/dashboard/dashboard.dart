@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finaro_project/screens/dashboard/CarouselWithDotsPage.dart';
 import 'package:finaro_project/screens/dashboard/terdekat/terdekat.dart';
+import 'package:finaro_project/screens/profile/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -21,11 +22,31 @@ final FirebaseAuth auth = FirebaseAuth.instance;
 
 final User user = auth.currentUser;
 final uid = user.uid;
+String lokasi;
+String name;
 
 class _DashboardPageState extends State<DashboardPage> {
+  String name = "Nama Loading...";
+  String lokasi = "Lokasi Loading...";
+  void getData() async {
+    User user = await FirebaseAuth.instance.currentUser;
+    var vari = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user.uid)
+        .get();
+    setState(() {
+      name = vari.data()['nama_lengkap'];
+      lokasi = vari.data()['lokasi'];
+    });
+  }
+
+  void initState() {
+    getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-   
     return MaterialApp(
       home: Scaffold(
         body: SingleChildScrollView(
@@ -41,7 +62,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 children: [
                   IconButton(icon: Icon(Icons.notifications), onPressed: () {}),
                   IconButton(
-                      icon: Image.asset('assets/images/profile.png'),
+                      icon: Image.asset('assets/images/profileavatar.png'),
                       onPressed: () {}),
                 ],
               ),
@@ -51,14 +72,14 @@ class _DashboardPageState extends State<DashboardPage> {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     children: [
                       TextSpan(
-                        text: '\nHartanto',
+                        text: '\n$name',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 50),
                       ),
                     ]),
               ),
               SizedBox(
-                height: 35,
+                height: 10,
               ),
               Row(
                 children: [
@@ -75,7 +96,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   )
                 ],
               ),
-              Text("Unnamed Road",
+              Text(lokasi,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               SizedBox(
                 height: 25,

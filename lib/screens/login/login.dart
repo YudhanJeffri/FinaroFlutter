@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finaro_project/database/database.dart';
 import 'package:finaro_project/model/auth_services.dart';
 import 'package:finaro_project/screens/home.dart';
 import 'package:finaro_project/screens/registrasi/registrasi.dart';
@@ -14,7 +16,16 @@ void toast(label) {
       gravity: ToastGravity.CENTER);
 }
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key key}) : super(key: key);
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+bool userBool;
+
+class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
@@ -145,23 +156,14 @@ class LoginPage extends StatelessWidget {
                                   toast(
                                       "Password tidak boleh kurang dari sama dengan 6");
                                 } else {
-                                  context.read<AuthService>().login(
-                                        email,
-                                        password,
-                                      );
+                                  context
+                                      .read<AuthService>()
+                                      .login(email, password, context);
                                   final FirebaseAuth auth =
                                       FirebaseAuth.instance;
 
-                                  final User user = auth.currentUser;
-                                  if (user != null) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HomePage()),
-                                    );
-                                  } else {
-                                    toast("User tidak di temukan");
-                                  }
+                                  final User usercurrent = auth.currentUser;
+                                  var _instance = FirebaseFirestore.instance;
                                 }
                               } catch (e) {
                                 toast(
@@ -212,34 +214,34 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget makeInput({label, obscureText = false, controller}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          label,
-          style: TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
+Widget makeInput({label, obscureText = false, controller}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      Text(
+        label,
+        style: TextStyle(
+            fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
+      ),
+      SizedBox(
+        height: 5,
+      ),
+      TextFormField(
+        obscureText: obscureText,
+        controller: controller,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey[400])),
+          border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey[400])),
         ),
-        SizedBox(
-          height: 5,
-        ),
-        TextFormField(
-          obscureText: obscureText,
-          controller: controller,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey[400])),
-            border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey[400])),
-          ),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-      ],
-    );
-  }
+      ),
+      SizedBox(
+        height: 30,
+      ),
+    ],
+  );
 }

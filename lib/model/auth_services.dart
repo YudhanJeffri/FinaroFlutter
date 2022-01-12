@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class AuthService {
   final FirebaseAuth _auth;
@@ -8,16 +9,35 @@ class AuthService {
 
   Stream<User> get authStateChanges => _auth.idTokenChanges();
 
-  Future<String> login(String email, String password) async {
+  Future<String> login(String email, String password, context) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-      return "Logged In";
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .catchError((err) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Error"),
+                content: Text(err.message),
+                actions: [
+                  ElevatedButton(
+                    child: Text("Ok"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              );
+            });
+      });
     } catch (e) {
       return e;
     }
   }
 
-  Future<String> signUp(String email, String password,String nama_lengkap, String lokasi,String nomor_hp) async {
+  Future<String> signUp(String email, String password, String nama_lengkap,
+      String lokasi, String nomor_hp) async {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -26,11 +46,11 @@ class AuthService {
 
         await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
           'uid': user.uid,
-          'nama_lengkap' : nama_lengkap,
+          'nama_lengkap': nama_lengkap,
           'email': email,
           'password': password,
-          'lokasi' : lokasi,
-          'nomor_hp' : nomor_hp,
+          'lokasi': lokasi,
+          'nomor_hp': nomor_hp,
         });
       });
       return "Signed Up";
