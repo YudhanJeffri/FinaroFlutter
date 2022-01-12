@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finaro_project/screens/dashboard/CarouselWithDotsPage.dart';
 import 'package:finaro_project/screens/dashboard/terdekat/terdekat.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,6 +25,7 @@ final uid = user.uid;
 class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
+   
     return MaterialApp(
       home: Scaffold(
         body: SingleChildScrollView(

@@ -1,9 +1,23 @@
+import 'package:finaro_project/model/auth_services.dart';
 import 'package:finaro_project/screens/home.dart';
 import 'package:finaro_project/screens/registrasi/registrasi.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:finaro_project/animation/fadedanimation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+
+void toast(label) {
+  Fluttertoast.showToast(
+      msg: label,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER);
+}
 
 class LoginPage extends StatelessWidget {
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,9 +83,16 @@ class LoginPage extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 40),
                     child: Column(
                       children: <Widget>[
-                        FadeAnimation(1.2, makeInput(label: "Email")),
-                        FadeAnimation(1.3,
-                            makeInput(label: "Password", obscureText: true)),
+                        FadeAnimation(
+                            1.2,
+                            makeInput(
+                                label: "Email", controller: emailController)),
+                        FadeAnimation(
+                            1.3,
+                            makeInput(
+                                label: "Password",
+                                obscureText: true,
+                                controller: passwordController)),
                         FadeAnimation(
                           1.4,
                           Container(
@@ -111,11 +132,41 @@ class LoginPage extends StatelessWidget {
                             minWidth: double.infinity,
                             height: 60,
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomePage()),
-                              );
+                              final String email = emailController.text.trim();
+                              final String password =
+                                  passwordController.text.trim();
+
+                              try {
+                                if (email.isEmpty) {
+                                  toast("Mohon mengisi email");
+                                } else if (password.isEmpty) {
+                                  toast("Mohon mengisi password");
+                                } else if (password.length <= 6) {
+                                  toast(
+                                      "Password tidak boleh kurang dari sama dengan 6");
+                                } else {
+                                  context.read<AuthService>().login(
+                                        email,
+                                        password,
+                                      );
+                                  final FirebaseAuth auth =
+                                      FirebaseAuth.instance;
+
+                                  final User user = auth.currentUser;
+                                  if (user != null) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomePage()),
+                                    );
+                                  } else {
+                                    toast("User tidak di temukan");
+                                  }
+                                }
+                              } catch (e) {
+                                toast(
+                                    "Terjadi kesalahan coba lagi nanti \n" + e);
+                              }
                             },
                             color: Colors.blue,
                             elevation: 0,
@@ -162,7 +213,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget makeInput({label, obscureText = false}) {
+  Widget makeInput({label, obscureText = false, controller}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -174,8 +225,9 @@ class LoginPage extends StatelessWidget {
         SizedBox(
           height: 5,
         ),
-        TextField(
+        TextFormField(
           obscureText: obscureText,
+          controller: controller,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             enabledBorder: OutlineInputBorder(
