@@ -372,192 +372,207 @@ class _TerdekatPageState extends State<TerdekatPage> {
           )
         ],
       ));
-  Widget detailPesanSheet() => Container(
-      margin: EdgeInsets.all(20.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            leading: IconButton(
-                icon: Image.asset('assets/images/stand_icon.png'),
-                onPressed: () {}),
-            title: Text.rich(
-              TextSpan(
-                  text: 'Terima kasih, Yuskiah!',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  children: [
+  Widget detailPesanSheet() => SingleChildScrollView(
+        child: Container(
+            margin: EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  leading: IconButton(
+                      icon: Image.asset('assets/images/stand_icon.png'),
+                      onPressed: () {}),
+                  title: Text.rich(
                     TextSpan(
-                      text: '\n4 Okt 2021, 13.10',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                    ),
-                  ]),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          Column(
-            children: [
-              Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: HexColor("#EBEBEB"),
-                    borderRadius: BorderRadius.circular(15.0),
+                        text: 'Terima kasih, Yuskiah!',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                        children: [
+                          TextSpan(
+                            text: '\n4 Okt 2021, 13.10',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                        ]),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SizedBox(height: 10, width: 10),
-                      Expanded(
-                        flex: 2,
-                        child: Column(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                Column(
+                  children: [
+                    Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: HexColor("#EBEBEB"),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            SizedBox(height: 10),
-                            Text.rich(
-                              TextSpan(
-                                  text: 'Total Pembayaran',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                  children: [
+                            SizedBox(height: 10, width: 10),
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  SizedBox(height: 10),
+                                  Text.rich(
                                     TextSpan(
-                                      text: '\nRp20.000',
+                                        text: 'Total Pembayaran',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                        children: [
+                                          TextSpan(
+                                            text: '\nRp20.000',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 30),
+                                          ),
+                                        ]),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )),
+                    SizedBox(
+                      height: 18,
+                    ),
+                    Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: HexColor("#EBEBEB"),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Diskon",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 30),
+                                          fontSize: 20),
                                     ),
+                                    Text(
+                                      "-2.000",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    )
                                   ]),
                             ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  )),
-              SizedBox(
-                height: 18,
-              ),
-              Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: HexColor("#EBEBEB"),
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Diskon",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Poin",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
+                                  Text(
+                                    "+5",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  )
+                                ],
                               ),
-                              Text(
-                                "-2.000",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
-                              )
-                            ]),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Poin",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
-                            ),
-                            Text(
-                              "+5",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
                             )
                           ],
+                        )),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Gimana pesanannya?",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                    ),
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: HexColor("#C4C4C4"),
+                            ),
+                            Icon(
+                              Icons.star,
+                              color: HexColor("#C4C4C4"),
+                            ),
+                            Icon(
+                              Icons.star,
+                              color: HexColor("#C4C4C4"),
+                            ),
+                            Icon(
+                              Icons.star,
+                              color: HexColor("#C4C4C4"),
+                            ),
+                            Icon(
+                              Icons.star,
+                              color: HexColor("#C4C4C4"),
+                            ),
+                          ],
                         ),
-                      )
-                    ],
-                  )),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Gimana pesanannya?",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-              ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(
-                        Icons.star,
-                        color: HexColor("#C4C4C4"),
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: HexColor("#C4C4C4"),
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: HexColor("#C4C4C4"),
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: HexColor("#C4C4C4"),
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: HexColor("#C4C4C4"),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            ],
-          ),
-          Divider(color: Colors.black),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => TerdekatPage()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(170, 40), shape: StadiumBorder()),
-                child: Text(
-                  "Pesan lagi",
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                      ],
+                    )
+                  ],
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => TerdekatPage()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.grey,
-                    fixedSize: const Size(170, 40),
-                    shape: StadiumBorder()),
-                child: Text(
-                  "Oke",
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-                ),
-              ),
-            ],
-          )
-        ],
-      ));
+                Divider(color: Colors.black),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TerdekatPage()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: const Size(170, 40),
+                          shape: StadiumBorder()),
+                      child: Text(
+                        "Pesan lagi",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 18),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TerdekatPage()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.grey,
+                          fixedSize: const Size(170, 40),
+                          shape: StadiumBorder()),
+                      child: Text(
+                        "Oke",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 18),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            )),
+      );
 }

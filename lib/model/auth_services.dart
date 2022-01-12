@@ -37,7 +37,7 @@ class AuthService {
   }
 
   Future<String> signUp(String email, String password, String nama_lengkap,
-      String lokasi, String nomor_hp) async {
+      String lokasi, String nomor_hp, context) async {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -52,6 +52,23 @@ class AuthService {
           'lokasi': lokasi,
           'nomor_hp': nomor_hp,
         });
+      }).catchError((err) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Error"),
+                content: Text(err.message),
+                actions: [
+                  ElevatedButton(
+                    child: Text("Ok"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              );
+            });
       });
       return "Signed Up";
     } catch (e) {

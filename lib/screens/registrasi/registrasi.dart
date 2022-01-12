@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finaro_project/animation/fadedanimation.dart';
 import 'package:finaro_project/model/auth_services.dart';
@@ -126,7 +124,7 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
                           context
                               .read<AuthService>()
                               .signUp(email, password, nama_lengkap, lokasi,
-                                  nomorhp)
+                                  nomorhp, context)
                               .then((value) async {
                             User user = FirebaseAuth.instance.currentUser;
                             await FirebaseFirestore.instance
