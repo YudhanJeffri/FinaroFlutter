@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+final GlobalKey<State> _LoaderDialog = new GlobalKey<State>();
+
 class AuthService {
   final FirebaseAuth _auth;
 
@@ -14,6 +16,7 @@ class AuthService {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .catchError((err) {
+        Navigator.of(context, rootNavigator: true).pop();
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -53,6 +56,7 @@ class AuthService {
           'nomor_hp': nomor_hp,
         });
       }).catchError((err) {
+        Navigator.of(context, rootNavigator: true).pop();
         showDialog(
             context: context,
             builder: (BuildContext context) {

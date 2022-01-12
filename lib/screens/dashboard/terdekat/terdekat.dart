@@ -12,6 +12,14 @@ class TerdekatPage extends StatefulWidget {
 }
 
 class _TerdekatPageState extends State<TerdekatPage> {
+  GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -99,24 +107,24 @@ class _TerdekatPageState extends State<TerdekatPage> {
   Widget build(BuildContext context) {
     createMarker(context);
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        brightness: Brightness.light,
-        backgroundColor: Colors.white,
-        title: Text("Terdekat", style: TextStyle(color: Colors.black)),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 20,
-            color: Colors.black,
+        appBar: AppBar(
+          elevation: 0,
+          brightness: Brightness.light,
+          backgroundColor: Colors.white,
+          title: Text("Terdekat", style: TextStyle(color: Colors.black)),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.black,
+            ),
           ),
         ),
-      ),
-      body: Container(
-        child: GoogleMap(
+        body: Container(
+          child: GoogleMap(
             markers: markers,
             mapType: MapType.normal,
             myLocationButtonEnabled: true,
@@ -210,15 +218,14 @@ class _TerdekatPageState extends State<TerdekatPage> {
             },
             zoomControlsEnabled: true,
             zoomGesturesEnabled: true,
-            onMapCreated: (GoogleMapController controller) {
-              _controllerGoogleMap.complete(controller);
-              newGooglemapController = controller;
-              locatePosition();
-            },
-            initialCameraPosition: _kGooglePlex),
-      ),
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: _center,
+              zoom: 11.0,
+            ),
+          ),
 
-      /*  MaterialButton(
+          /*  MaterialButton(
                   onPressed: () => showModalBottomSheet(
                       context: context,
                       builder: (BuildContext context) {
@@ -226,7 +233,7 @@ class _TerdekatPageState extends State<TerdekatPage> {
                           child: Text('heyooo'),
                         );
                       })) */
-    );
+        ));
   }
 
   Widget detailSheet() => Container(

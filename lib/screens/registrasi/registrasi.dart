@@ -3,10 +3,13 @@ import 'package:finaro_project/animation/fadedanimation.dart';
 import 'package:finaro_project/model/auth_services.dart';
 import 'package:finaro_project/screens/home.dart';
 import 'package:finaro_project/screens/login/login.dart';
+import 'package:finaro_project/screens/utilities/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+
+final GlobalKey<State> _LoaderDialog = new GlobalKey<State>();
 
 class RegistrasiPage extends StatefulWidget {
   @override
@@ -106,6 +109,7 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
                     minWidth: double.infinity,
                     height: 60,
                     onPressed: () {
+                      LoaderDialog.showLoadingDialog(context, _LoaderDialog);
                       final String email = emailController.text.trim();
                       final String password = passwordController.text.trim();
                       final String nama_lengkap = namaController.text.trim();

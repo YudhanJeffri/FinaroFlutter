@@ -3,6 +3,7 @@ import 'package:finaro_project/database/database.dart';
 import 'package:finaro_project/model/auth_services.dart';
 import 'package:finaro_project/screens/home.dart';
 import 'package:finaro_project/screens/registrasi/registrasi.dart';
+import 'package:finaro_project/screens/utilities/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:finaro_project/animation/fadedanimation.dart';
@@ -15,6 +16,8 @@ void toast(label) {
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER);
 }
+
+final GlobalKey<State> _LoaderDialog = new GlobalKey<State>();
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -143,6 +146,8 @@ class _LoginPageState extends State<LoginPage> {
                             minWidth: double.infinity,
                             height: 60,
                             onPressed: () {
+                              LoaderDialog.showLoadingDialog(
+                                  context, _LoaderDialog);
                               final String email = emailController.text.trim();
                               final String password =
                                   passwordController.text.trim();
