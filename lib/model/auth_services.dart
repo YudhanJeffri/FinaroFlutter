@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finaro_project/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,10 @@ class AuthService {
     try {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              ))
           .catchError((err) {
         Navigator.of(context, rootNavigator: true).pop();
         showDialog(
@@ -34,6 +39,7 @@ class AuthService {
               );
             });
       });
+      return "Logged in";
     } catch (e) {
       return e;
     }
@@ -45,35 +51,43 @@ class AuthService {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) async {
-        User user = FirebaseAuth.instance.currentUser;
+            User user = FirebaseAuth.instance.currentUser;
 
-        await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
-          'uid': user.uid,
-          'nama_lengkap': nama_lengkap,
-          'email': email,
-          'password': password,
-          'lokasi': lokasi,
-          'nomor_hp': nomor_hp,
-        });
-      }).catchError((err) {
-        Navigator.of(context, rootNavigator: true).pop();
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text("Error"),
-                content: Text(err.message),
-                actions: [
-                  ElevatedButton(
-                    child: Text("Ok"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-              );
+            await FirebaseFirestore.instance
+                .collection("users")
+                .doc(user.uid)
+                .set({
+              'uid': user.uid,
+              'nama_lengkap': nama_lengkap,
+              'email': email,
+              'password': password,
+              'lokasi': lokasi,
+              'nomor_hp': nomor_hp,
             });
-      });
+          })
+          .then((value) => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              ))
+          .catchError((err) {
+            Navigator.of(context, rootNavigator: true).pop();
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Error"),
+                    content: Text(err.message),
+                    actions: [
+                      ElevatedButton(
+                        child: Text("Ok"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ],
+                  );
+                });
+          });
       return "Signed Up";
     } catch (e) {
       return e;

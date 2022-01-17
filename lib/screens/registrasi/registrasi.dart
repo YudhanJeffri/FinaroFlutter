@@ -115,47 +115,36 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
                       final String nama_lengkap = namaController.text.trim();
                       final String lokasi = lokasiController.text.trim();
                       final String nomorhp = nomorhpController.text.trim();
-                      if (password.isEmpty ||
-                          email.isEmpty ||
-                          nama_lengkap.isEmpty ||
-                          lokasi.isEmpty ||
-                          nomorhp.isEmpty) {
-                        toast("Harap isi semua data");
-                      } else if (password.length <= 6) {
-                        toast("Password tidak boleh kurang dari sama dengan 6");
-                      } else {
-                        try {
-                          context
-                              .read<AuthService>()
-                              .signUp(email, password, nama_lengkap, lokasi,
-                                  nomorhp, context)
-                              .then((value) async {
-                            User user = FirebaseAuth.instance.currentUser;
-                            await FirebaseFirestore.instance
-                                .collection("users")
-                                .doc(user.uid)
-                                .set({
-                                  'uid': user.uid,
-                                  'nama_lengkap': nama_lengkap,
-                                  'email': email,
-                                  'password': password,
-                                  'lokasi': lokasi,
-                                  'nomor_hp': nomorhp
-                                })
-                                .then(
-                                  (value) => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomePage()),
-                                  ),
-                                )
-                                .catchError((e) => toast(
-                                    "Terjadi kesalahan coba lagi nanti \n" +
-                                        e));
-                          });
-                        } catch (e) {
-                          toast("Terjadi kesalahan coba lagi nanti \n" + e);
-                        }
+                      try {
+                        context
+                            .read<AuthService>()
+                            .signUp(email, password, nama_lengkap, lokasi,
+                                nomorhp, context)
+                            .then((value) async {
+                          User user = FirebaseAuth.instance.currentUser;
+                          await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(user.uid)
+                              .set({
+                                'uid': user.uid,
+                                'nama_lengkap': nama_lengkap,
+                                'email': email,
+                                'password': password,
+                                'lokasi': lokasi,
+                                'nomor_hp': nomorhp
+                              })
+                              .then(
+                                (value) => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage()),
+                                ),
+                              )
+                              .catchError((e) => toast(
+                                  "Terjadi kesalahan coba lagi nanti \n" + e));
+                        });
+                      } catch (e) {
+                        toast("Terjadi kesalahan coba lagi nanti \n" + e);
                       }
                     },
                     color: Colors.blue,

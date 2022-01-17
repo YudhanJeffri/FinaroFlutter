@@ -151,25 +151,14 @@ class _LoginPageState extends State<LoginPage> {
                               final String email = emailController.text.trim();
                               final String password =
                                   passwordController.text.trim();
-
                               try {
-                                if (email.isEmpty) {
-                                  toast("Mohon mengisi email");
-                                } else if (password.isEmpty) {
-                                  toast("Mohon mengisi password");
-                                } else if (password.length <= 6) {
-                                  toast(
-                                      "Password tidak boleh kurang dari sama dengan 6");
-                                } else {
-                                  context
-                                      .read<AuthService>()
-                                      .login(email, password, context);
-                                  final FirebaseAuth auth =
-                                      FirebaseAuth.instance;
+                                context
+                                    .read<AuthService>()
+                                    .login(email, password, context);
+                                final FirebaseAuth auth = FirebaseAuth.instance;
 
-                                  final User usercurrent = auth.currentUser;
-                                  var _instance = FirebaseFirestore.instance;
-                                }
+                                final User usercurrent = auth.currentUser;
+                                var _instance = FirebaseFirestore.instance;
                               } catch (e) {
                                 toast(
                                     "Terjadi kesalahan coba lagi nanti \n" + e);
